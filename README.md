@@ -102,6 +102,8 @@ dbt deps
 ### 4. Load the external tables
 Execute the following:
 ```bash
+bq mk --dataset --location=US --project_id=${PROJECT} raw
+
 cd $DBT_PROJECT/dbt
 dbt run-operation stage_external_sources
 ```
@@ -252,3 +254,21 @@ Next, click on the <walkthrough-spotlight-pointer spotlightId="devshell-web-prev
 When you are done browsing the documentation website, ensure that you press `Ctrl-C` to stop the web server and to bring you back to the shell.
 
 ## Integration with Cloud Composer
+
+As shown in the architecture diagram below, dbt is responsible for the ELT pineline inside BigQuery. Cloud Composer is responsible for end-to-end data pipeline orchestration, including data ingestion and data extraction. The dbt pipeline is integrated with Cloud Composer as part of the DAG workflow.
+
+<img src="img/dbt-airflow.png" width="100%" />
+
+***Figure 3***
+
+dbt core is a command line tool, and can be packaged into a container image file. Then, Cloud Composer can run the dbt pipeline using KubernetesPodOperator  in the gke cluster which run the Composer. The best practice is to provision a dedicated node pool in the gke cluster for running the dbt pipeline.
+
+<img src="img/airflow.jpg" width="100%" />
+
+***Figure 4***
+
+### 1. Build and deploy the dbt docker image to the Arte
+```bash
+cd $DBT_PROJECT
+gcloud builds submit --region=us-central1 --config=cloudbuild.yml .
+```

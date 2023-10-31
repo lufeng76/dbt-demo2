@@ -5,7 +5,7 @@ dbt_models=$3
 dbt_vars=$4
 full_refresh=$5
 
-cd /dbt
+cd /demo
 
 if [ $mode = "run" ]; then
     echo "dbt Mode is run"
