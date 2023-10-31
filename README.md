@@ -263,7 +263,7 @@ As shown in the architecture diagram below, dbt is responsible for the ELT pinel
 
 dbt core is a command line tool, and can be packaged into a container image file. Then, Cloud Composer can run the dbt pipeline using KubernetesPodOperator  in the gke cluster which run the Composer. The best practice is to provision a dedicated node pool in the gke cluster for running the dbt pipeline.
 
-<img src="img/airflow.jpg" width="100%" />
+<img src="img/airflow.jpeg" width="100%" />
 
 ***Figure 4***
 
