@@ -261,14 +261,39 @@ As shown in the architecture diagram below, dbt is responsible for the ELT pinel
 
 ***Figure 3***
 
-dbt core is a command line tool, and can be packaged into a container image file. Then, Cloud Composer can run the dbt pipeline using KubernetesPodOperator  in the gke cluster which run the Composer. The best practice is to provision a dedicated node pool in the gke cluster for running the dbt pipeline.
+dbt core is a command line tool, and can be packaged into a container image file. Then, Cloud Composer can run the dbt pipeline using `KubernetesPodOperator` in the gke cluster which run the Composer. `KubernetesPodOperator` launches Kubernetes pods in your environment's cluster.
 
-<img src="img/airflow.jpeg" width="100%" />
 
-***Figure 4***
+### 1. Build and deploy the dbt docker image to the Artefact Registry
 
-### 1. Build and deploy the dbt docker image to the Arte
 ```bash
 cd $DBT_PROJECT
 gcloud builds submit --region=us-central1 --config=cloudbuild.yml .
 ```
+
+### 2. Create a Cloud Composer instance and deploy the DAG
+
+Create a Cloud Composer 2 instance
+```bash
+gcloud composer environments create airflow1 \
+    --location us-central1 \
+    --image-version composer-2.4.6-airflow-2.6.3
+```
+
+Upload `dbt_dag.py` to the DAGs folder in the instance, and then manually trigger the
+
+## CI/CD pipeline
+Cloud Build uses build triggers to enable CI/CD automation. You can configure triggers to listen for incoming events, such as when a new commit is pushed to a repository or when a pull request is initiated, and then automatically execute a build when new events come in.
+
+dbt can be easily integrated with the Cloud Build and the source repository, such as Github or Gitlab, to build a CI/CD pipeline. 
+
+Here is the workflow:
+* The developer change the code, and run the unit test in there local dev environment
+* The developer decide to commit the code change and merge into the main branch
+* The merge action trigger the Cloud Build script
+* Build the dbt container image
+* Run the integration test
+* Push the image to the container registry
+* Cloud composer pull the latest dbt image
+
+

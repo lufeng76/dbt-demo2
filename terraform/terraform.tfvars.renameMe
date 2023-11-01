@@ -1,3 +1,0 @@
-project_prefix = "bigquery-dbt-bank"
-billing_account_id = ""
-bigquery_location = "US"

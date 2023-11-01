@@ -12,7 +12,7 @@ JOB_NAME = 'sample_dag_task_running_on_gke'
 start_date = datetime.datetime(2021, 1, 31)
 
 with models.DAG(
-        dag_id='dbt_k8s_run',
+        dag_id='test_k8s_run',
         schedule_interval=None,
         start_date=start_date) as dag:
     
@@ -23,17 +23,17 @@ with models.DAG(
     )
 
     dbt_task = KubernetesPodOperator(
-        task_id="dbt-task",
+        task_id="k8s-task",
         name="dbt-task",
         namespace="composer-user-workloads",
         
         # Ensures that cache is always refreshed
         image_pull_policy='Always',
         # Artifact image of dbt repo
-        image='gcr.io/lufeng-demo/dbt-demo:v1',
-        cmds=["/bin/bash", "-c","/demo/dbt_run.sh run dev bigquery_bank {} True"],
+        image='gcr.io/gcp-runtimes/ubuntu_20_0_4',
+        cmds=["/bin/bash", "-c","echo 'test KubernetesPodOperator'"],
         config_file="/home/airflow/composer_kube_config",
-        kubernetes_conn_id="kubernetes_default",
+        kubernetes_conn_id="kubernetes_default",     
         )
 
     bash_task >> dbt_task

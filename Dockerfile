@@ -1,5 +1,3 @@
-
-#FROM fishtownanalytics/dbt:1.0.0
 FROM ghcr.io/dbt-labs/dbt-bigquery:1.6.6
 ENV DBT_PROFILES_DIR=/demo/profile/
 COPY profiles.yml /demo/profile/
