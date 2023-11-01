@@ -1,4 +1,4 @@
-# Dbt BigQuery Integration Demo
+# dbt BigQuery Integration Demo
 
 Data Build Tool (dbt) is a cutting-edge open-source data modeling and transformation tool. It enables engineers and data analysts to transform and structure data in a dependable and scalable manner. Dbt is used to build data pipelines for data warehousing and business intelligence applications.
 
@@ -280,7 +280,7 @@ gcloud composer environments create airflow1 \
     --image-version composer-2.4.6-airflow-2.6.3
 ```
 
-Upload `dbt_dag.py` to the DAGs folder in the instance, and then manually trigger the
+Upload `dbt_dag.py` to the DAGs folder in the instance, and then manually trigger the DAG
 
 ## CI/CD pipeline
 Cloud Build uses build triggers to enable CI/CD automation. You can configure triggers to listen for incoming events, such as when a new commit is pushed to a repository or when a pull request is initiated, and then automatically execute a build when new events come in.
