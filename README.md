@@ -280,7 +280,7 @@ gcloud composer environments create airflow1 \
     --image-version composer-2.4.6-airflow-2.6.3
 ```
 
-Upload `dbt_dag.py` to the DAGs folder in the instance, and then manually trigger the DAG
+Upload `dbt_dag.py` to the DAGs folder in the instance, and then manually trigger the DAG. You need to change your image Artifact name
 
 ## CI/CD pipeline
 Cloud Build uses build triggers to enable CI/CD automation. You can configure triggers to listen for incoming events, such as when a new commit is pushed to a repository or when a pull request is initiated, and then automatically execute a build when new events come in.

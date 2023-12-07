@@ -30,6 +30,7 @@ with models.DAG(
         # Ensures that cache is always refreshed
         image_pull_policy='Always',
         # Artifact image of dbt repo
+        # You need to change your image name
         image='gcr.io/lufeng-demo/dbt-demo:v1',
         cmds=["/bin/bash", "-c","/demo/dbt_run.sh run dev bigquery_bank {} True"],
         config_file="/home/airflow/composer_kube_config",
